@@ -6,6 +6,9 @@
 const char* ssid = "jasooon";
 const char* password = "12345678";
 
+unsigned long lastFastFlash = 0;
+unsigned long lastSlowFlash = 0;
+
 bool connected = false;
 
 void setup() {
@@ -19,19 +22,26 @@ void setup() {
 
 void loop() {
     // flash fast when disconnected
-    while (WiFi.status() != WL_CONNECTED) {
-      digitalWrite(LED_PIN, HIGH);
-      delay(100);
-      digitalWrite(LED_PIN, LOW);
-      delay(100);
+    if (WiFi.status() != WL_CONNECTED) {
+      Serial.println("not connected");
+        unsigned long elapsed = millis() - lastFastFlash;
+        if (elapsed < 100)
+            digitalWrite(LED_PIN, HIGH);
+        else if (elapsed < 200)
+            digitalWrite(LED_PIN, LOW);
+        else
+            lastFastFlash = millis();
     }
 
-    Serial.print("IP is ");
-    Serial.println(WiFi.localIP());
-    Serial.println("banana!");
-  
-    digitalWrite(LED_PIN, HIGH);
-    delay(1000);
-    digitalWrite(LED_PIN, LOW);
-    delay(1000);
+    else {
+      Serial.println("connected");
+      // flash slow when connected
+      unsigned long elapsed = millis() - lastSlowFlash;
+      if (elapsed < 1000)
+            digitalWrite(LED_PIN, HIGH);
+      else if (elapsed < 2000)
+          digitalWrite(LED_PIN, LOW);
+      else
+          lastSlowFlash = millis();
+    }
 }
