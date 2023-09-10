@@ -23,7 +23,6 @@ void setup() {
 void loop() {
     // flash fast when disconnected
     if (WiFi.status() != WL_CONNECTED) {
-      Serial.println("not connected");
         unsigned long elapsed = millis() - lastFastFlash;
         if (elapsed < 100)
             digitalWrite(LED_PIN, HIGH);
@@ -34,14 +33,13 @@ void loop() {
     }
 
     else {
-      Serial.println("connected");
-      // flash slow when connected
-      unsigned long elapsed = millis() - lastSlowFlash;
-      if (elapsed < 1000)
+        // flash slow when connected
+        unsigned long elapsed = millis() - lastSlowFlash;
+        if (elapsed < 1000)
             digitalWrite(LED_PIN, HIGH);
-      else if (elapsed < 2000)
-          digitalWrite(LED_PIN, LOW);
-      else
-          lastSlowFlash = millis();
+        else if (elapsed < 2000)
+            digitalWrite(LED_PIN, LOW);
+        else
+            lastSlowFlash = millis();
     }
 }
