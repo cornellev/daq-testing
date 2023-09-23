@@ -1,20 +1,21 @@
 # DAQ for UC Testing Fall 2023
 
-_Jason Klein, Micah Fisher, Mehdi Heydari_
+_Jason Klein, Micah Fisher_
 
-The competition DAQ didn't work very consistently, so this is some new DAQ code that will be used for the Urban Concept testing on 9/23.
+The competition DAQ didn't work very consistently, so this is some new DAQ code that will be used for Urban Concept testing. It connects to the iPhone hotspot and communicates data through a WebSocket connection.
 
-## Todo
+## Progress
 
 - [x] Upload blink sketch to ESP32
 - [x] Connect to iPhone hotspot
 - [x] Make HTTP request to https://example.com/
+- [ ] Integrate with Micah's RPM sensor code
 - [ ] Batch RPM sensor data to send at ~5 Hz
-- [ ] Connect to a locally-hosted server over IP
+- [x] Connect to a locally-hosted server over IP
 - [ ] Connect to WebSocket server running on iPhone
 
 ## Setup
 
-I would've liked to be able to use PlatformIO or the VSCode arduino extension for this project, but I couldn't figure out how to get them working properly (the ESP32 uploader would fail for no reason). Thus, you'll need to configure it with the Arduino IDE. Follow [these instructions from the ESPRESSIF website](https://docs.espressif.com/projects/arduino-esp32/en/latest/installing.html) to install.
+Starting in commit `6792ffb4a`, this project uses [PlatformIO](https://platformio.org/), an embedded development project that is better than the Arduino IDE type stuff by a lot. I recommend using VSCode with the [PlatformIO extension](https://marketplace.visualstudio.com/items?itemName=platformio.platformio-ide). 
 
-Set the board in Tools > Board to `ESP32 Dev Module` and then verifying and uploading should work properly.
+The PlatformIO extension should add a bug-looking item in your VSCode toolbar. Click it, and open this project folder. Running `PlatformIO: Build` from the Command Palette should just work, and it'll install all the dependencies and stuff for you. `PlatformIO: Upload` will automatically find the correct port and compile and upload.
