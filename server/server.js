@@ -20,17 +20,9 @@ server.on("connection", socket => {
     // send socket errors to the main error stream
     socket.on("error", console.error)
 
-    // start sending data. This is where we would want to actually
-    // get the data from the mobile app instead over a *different* 
-    // websocket. When we get that data, we would want to send it to
-    // the frontend using this socket! This fakes having data
-    const interval = setInterval(() => {
-        socket.send(Math.random())
-    }, 1000)
-
-    // clear intervals if the socket closes
-    socket.on("close", () => {
-        clearInterval(interval)
+    // print data sent to the WebSocket server
+    socket.on("message", data => {
+        console.log("> " + data)
     })
 })
 
