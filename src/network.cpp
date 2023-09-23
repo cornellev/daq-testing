@@ -36,22 +36,21 @@ void Network::loop() {
         else if (elapsed < 2000)
             digitalWrite(LED_PIN, LOW);
         else {
-            Serial.print("IP address: ");
-            Serial.println(WiFi.localIP());
             lastSlowFlash = millis();
         }
 
         // make internet requests every 5 seconds
         if (millis() - lastWebRequest > 5000) {
             Serial.println("attempting request");
-            if (client.connect("example.com", 80)) {
+            uint8_t host_bytes[] = {172, 20, 10, 2};
+            if (client.connect(host_bytes, 8080)) {
                 Serial.println("connected");
                 // This will send the request to the server
                 client.println("GET / HTTP/1.1");
                 client.print("Host: ");
-                client.print("example.com");
+                client.print("172.20.10.2");
                 client.print(":");
-                client.println(80);
+                client.println(8080);
                 client.println("Connection: close");
                 client.println();
 
@@ -73,7 +72,7 @@ void Network::loop() {
                 Serial.println();
                 client.stop();
             } else {
-                Serial.println("get fucked boi");
+                Serial.println("failed to connect to client :(");
             }
             lastWebRequest = millis();
         }
