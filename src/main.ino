@@ -6,13 +6,10 @@ Network network;
 
 #define INTERRUPT_PIN 15
 
-volatile bool updated = false;
+unsigned long lastReading;
 volatile int count = 0;
 
-void interrupt() {
-    count++;
-    updated = true;
-}
+void interrupt() { count++; }
 
 void setup() {
     Serial.begin(115200);
@@ -25,9 +22,17 @@ void setup() {
 }
 
 void loop() {
-    if (updated) {
-        Serial.println(count);
-        updated = false;
+    // print RPM values every 10 seconds
+    unsigned long start = lastReading;
+    unsigned long stop = millis();
+    if (stop - start > 10000) {
+        float rpm = (count * 60000.0) / (stop - start);
+        Serial.print("RPM is ");
+        Serial.println(rpm, 5);
+        // reset variables
+        count = 0;
+        lastReading = stop;
     }
-    network.loop();
+
+    // network.loop();
 }
