@@ -47,16 +47,11 @@ void Network::loop() {
         else {
             lastSlowFlash = millis();
         }
-
-        // make internet requests every 5 seconds
-        if (millis() - lastWebRequest > 5000) {
-            // TODO this generate fake data for now
-            float data = ((float) random()) / 65536;
-            socket.sendTXT(String(data).c_str());
-            lastWebRequest = millis();
-        }
     }
 }
+
+// returns whether the data was sent successfully
+bool Network::send(double value) { return socket.sendTXT(std::to_string(value).c_str()); }
 
 void socket_event(WStype_t type, uint8_t* payload, size_t length) {
     switch (type) {
