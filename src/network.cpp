@@ -10,12 +10,12 @@ WebSocketsClient socket;
 void socket_event(WStype_t type, uint8_t* payload, size_t length);
 
 void Network::setup() {
-    WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
+    WiFi.begin(constants::WIFI_SSID, constants::WIFI_PASSWORD);
     pinMode(LED_BUILTIN, OUTPUT);
-    socket.begin(IPAddress(HOST_IP), HOST_PORT);
+    socket.begin(IPAddress(constants::HOST_IP), constants::HOST_PORT);
 
     socket.onEvent(socket_event);
-    socket.setReconnectInterval(RECONNECT_INTERVAL);
+    socket.setReconnectInterval(constants::RECONNECT_INTERVAL);
 }
 
 void Network::loop() {
