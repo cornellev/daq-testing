@@ -11,4 +11,5 @@ class Network {
    public:
     void setup();
     void loop();
+    bool send(double value);
 };

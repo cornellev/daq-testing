@@ -16,7 +16,7 @@ void HallEffect::loop() {
     unsigned long start = lastReading;
     unsigned long stop = millis();
     if (stop - start > constants::SAMPLE_PERIOD) {
-        float rpm = (count * 60000.0) / (stop - start);
+        double rpm = (count * 60000.0) / (stop - start);
         this->callback(rpm);
         // reset variables
         count = 0;
@@ -26,4 +26,4 @@ void HallEffect::loop() {
 
 void HallEffect::interrupt() { count++; }
 
-void HallEffect::onData(void (*callback)(float)) { this->callback = callback; }
+void HallEffect::onData(void (*callback)(double)) { this->callback = callback; }
