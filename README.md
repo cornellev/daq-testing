@@ -4,6 +4,8 @@ _Jason Klein, Micah Fisher_
 
 The competition DAQ didn't work very consistently, so this is some new DAQ code that will be used for Urban Concept testing on 9/31. It connects to the iPhone hotspot and communicates data through a WebSocket connection. The WebSocket server is running as a NodeJS application on this laptop (the code for that is in `/server`).
 
+Micah wrote the initial code to convert Hall Effect revolution count into RPM, and Jason integrated that into the PlatformIO project, connected the ESP32 to WiFi, configured the WebSocket client to run concurrently, and created the NodeJS WebSocket server.
+
 ## Progress
 
 - [x] Upload blink sketch to ESP32
