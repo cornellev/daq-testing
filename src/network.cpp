@@ -3,8 +3,6 @@
 #include <WebSocketsClient.h>
 #include <WiFi.h>
 
-#define LED_PIN 13
-
 WebSocketsClient socket;
 
 void socket_event(WStype_t type, uint8_t* payload, size_t length);
@@ -13,7 +11,7 @@ void Network::setup() {
     const char* ssid = "jasooon";
     const char* password = "12345678";
     WiFi.begin(ssid, password);
-    pinMode(LED_PIN, OUTPUT);
+    pinMode(LED_BUILTIN, OUTPUT);
 
     // always the same when hosting on iOS hotspot
     uint8_t host_bytes[] = {172, 20, 10, 2};
@@ -36,9 +34,9 @@ void Network::loop() {
 
         unsigned long elapsed = millis() - lastFastFlash;
         if (elapsed < 100)
-            digitalWrite(LED_PIN, HIGH);
+            digitalWrite(LED_BUILTIN, HIGH);
         else if (elapsed < 200)
-            digitalWrite(LED_PIN, LOW);
+            digitalWrite(LED_BUILTIN, LOW);
         else
             lastFastFlash = millis();
     }
@@ -47,9 +45,9 @@ void Network::loop() {
         // flash slow when connected
         unsigned long elapsed = millis() - lastSlowFlash;
         if (elapsed < 1000)
-            digitalWrite(LED_PIN, HIGH);
+            digitalWrite(LED_BUILTIN, HIGH);
         else if (elapsed < 2000)
-            digitalWrite(LED_PIN, LOW);
+            digitalWrite(LED_BUILTIN, LOW);
         else {
             lastSlowFlash = millis();
         }
