@@ -14,6 +14,11 @@ void setup() {
 
     network.setup();
     halleffect.setup();
+
+    halleffect.onData([](float rpm) {
+        Serial.print("RPM is ");
+        Serial.println(rpm, 5);
+    });
 }
 
 void loop() {
