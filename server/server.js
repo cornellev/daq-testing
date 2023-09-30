@@ -23,6 +23,27 @@ server.on("connection", socket => {
     // print data sent to the WebSocket server
     socket.on("message", data => {
         console.log("> " + data)
+
+        // data is a Uint8Array, and toString() turns it into a string
+        // parseFloat returns a number or NaN, which is also a number
+        const rpm = parseFloat(data.toString())
+        console.log(rpm)
+
+        if (!isNaN(rpm)) {
+            // send to the database
+            fetch("https://live-timing-dash.herokuapp.com/sept_test_table", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ right_rpm: rpm }),
+            }).then(response => {
+                if (response.ok) {
+                    console.log("Response was OK")
+                    response.text().then(text => console.log(text))
+                }
+            }).catch(reason => {
+                console.log(reason)
+            })
+        }
     })
 })
 
