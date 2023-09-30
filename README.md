@@ -2,17 +2,16 @@
 
 _Jason Klein, Micah Fisher_
 
-The competition DAQ didn't work very consistently, so this is some new DAQ code that will be used for Urban Concept testing. It connects to the iPhone hotspot and communicates data through a WebSocket connection.
+The competition DAQ didn't work very consistently, so this is some new DAQ code that will be used for Urban Concept testing on 9/31. It connects to the iPhone hotspot and communicates data through a WebSocket connection. The WebSocket server is running as a NodeJS application on this laptop (the code for that is in `/server`).
 
 ## Progress
 
 - [x] Upload blink sketch to ESP32
 - [x] Connect to iPhone hotspot
 - [x] Make HTTP request to https://example.com/
-- [ ] Integrate with Micah's RPM sensor code
-- [ ] Batch RPM sensor data to send at ~5 Hz
+- [x] Integrate with Micah's RPM sensor code
 - [x] Connect to a locally-hosted server over IP
-- [ ] Connect to WebSocket server running on iPhone
+- [x] Connect to WebSocket server ~~running on iPhone~~
 
 ## Setup
 
