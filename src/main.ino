@@ -34,5 +34,5 @@ void loop() {
         lastReading = stop;
     }
 
-    // network.loop();
+    network.loop();
 }

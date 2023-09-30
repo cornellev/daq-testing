@@ -3,23 +3,19 @@
 #include <WebSocketsClient.h>
 #include <WiFi.h>
 
+#include "constants.h"
+
 WebSocketsClient socket;
 
 void socket_event(WStype_t type, uint8_t* payload, size_t length);
 
 void Network::setup() {
-    const char* ssid = "jasooon";
-    const char* password = "12345678";
-    WiFi.begin(ssid, password);
+    WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
     pinMode(LED_BUILTIN, OUTPUT);
-
-    // always the same when hosting on iOS hotspot
-    uint8_t host_bytes[] = {172, 20, 10, 2};
-    // assumes that the WebSocket server is running on port 8080
-    socket.begin(IPAddress(host_bytes), 8080);
+    socket.begin(IPAddress(HOST_IP), HOST_PORT);
 
     socket.onEvent(socket_event);
-    socket.setReconnectInterval(5000);
+    socket.setReconnectInterval(RECONNECT_INTERVAL);
 }
 
 void Network::loop() {
