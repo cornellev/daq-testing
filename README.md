@@ -12,6 +12,8 @@ The competition DAQ didn't work very consistently, so this is some new DAQ code 
 - [x] Integrate with Micah's RPM sensor code
 - [x] Connect to a locally-hosted server over IP
 - [x] Connect to WebSocket server ~~running on iPhone~~
+- [x] Send data to the database
+- [ ] Verify that the data is sent correctly
 
 ## Setup
 
