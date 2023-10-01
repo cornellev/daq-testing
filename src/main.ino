@@ -1,10 +1,12 @@
 #include <WiFi.h>
 
+#include "constants.h"
 #include "hall-effect.h"
 #include "network.h"
 
 Network network;
-HallEffect halleffect;
+HallEffect leftrpm;
+HallEffect rightrpm;
 
 void setup() {
     Serial.begin(115200);
@@ -13,11 +15,19 @@ void setup() {
         ;
 
     network.setup();
-    halleffect.setup();
+    leftrpm.setup(constants::RPM::LEFT);
+    rightrpm.setup(constants::RPM::RIGHT);
 
-    halleffect.onData([](double rpm) {
-        if (network.send(rpm)) {
-            Serial.print("RPM is ");
+    leftrpm.onData([](double rpm) {
+        if (network.send(rpm, constants::RPM::LEFT)) {
+            Serial.print("LEFT RPM is ");
+            Serial.println(rpm, 5);
+        }
+    });
+
+    rightrpm.onData([](double rpm) {
+        if (network.send(rpm, constants::RPM::RIGHT)) {
+            Serial.print("RIGHT RPM is ");
             Serial.println(rpm, 5);
         }
     });
@@ -25,5 +35,6 @@ void setup() {
 
 void loop() {
     network.loop();
-    halleffect.loop();
+    leftrpm.loop();
+    rightrpm.loop();
 }

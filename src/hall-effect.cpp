@@ -6,10 +6,10 @@
 
 HallEffect* instance;
 
-void HallEffect::setup() {
+void HallEffect::setup(uint8_t interruptPin) {
     instance = this;
     auto callback = []() { instance->interrupt(); };
-    attachInterrupt(constants::INTERRUPT_PIN, callback, RISING);
+    attachInterrupt(interruptPin, callback, RISING);
 }
 
 void HallEffect::loop() {
