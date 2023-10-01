@@ -1,5 +1,7 @@
 #pragma once
 
+#include <stdint.h>
+
 class HallEffect {
    private:
     volatile int count;
@@ -9,7 +11,7 @@ class HallEffect {
     void interrupt();
 
    public:
-    void setup();
+    void setup(uint8_t interruptPin);
     void loop();
     void onData(void (*callback)(double));
 };

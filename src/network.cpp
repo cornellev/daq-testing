@@ -51,7 +51,11 @@ void Network::loop() {
 }
 
 // returns whether the data was sent successfully
-bool Network::send(double value) { return socket.sendTXT(std::to_string(value).c_str()); }
+bool Network::send(double value, constants::RPM side) {
+    std::string message = (side == constants::RPM::LEFT) ? "LEFT " : "RIGHT ";
+    message += std::to_string(value);
+    return socket.sendTXT(message.c_str());
+}
 
 void socket_event(WStype_t type, uint8_t* payload, size_t length) {
     switch (type) {

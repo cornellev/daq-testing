@@ -26,15 +26,21 @@ server.on("connection", socket => {
 
         // data is a Uint8Array, and toString() turns it into a string
         // parseFloat returns a number or NaN, which is also a number
-        const rpm = parseFloat(data.toString())
-        console.log(rpm)
+        const datastr = data.toString()
 
-        if (!isNaN(rpm)) {
+        // if it's a relevant data packet, it will match /(LEFT|RIGHT)\s\d+\.\d+/
+        const regex = /(?<dir>LEFT|RIGHT)\s(?<rpm>\d+\.\d+)/; let match
+        if ((match = datastr.match(regex))) {
+            let { dir, rpm } = match.groups
+            const key = dir === "LEFT" ? "left_rpm" : "right_rpm"
+            rpm = parseFloat(rpm)
+            console.log(rpm)
+
             // send to the database
             fetch("https://live-timing-dash.herokuapp.com/sept_test_table", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ right_rpm: rpm }),
+                body: JSON.stringify({ [key]: rpm }),
             }).then(response => {
                 if (response.ok) {
                     console.log("Response was OK")
@@ -44,6 +50,7 @@ server.on("connection", socket => {
                 console.log(reason)
             })
         }
+
     })
 })
 

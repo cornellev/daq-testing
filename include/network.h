@@ -3,6 +3,8 @@
 #include <WebSocketsClient.h>
 #include <WiFi.h>
 
+#include "constants.h"
+
 class Network {
    private:
     unsigned long lastFastFlash, lastSlowFlash, lastWebRequest, lastPeriodPrint;
@@ -11,5 +13,5 @@ class Network {
    public:
     void setup();
     void loop();
-    bool send(double value);
+    bool send(double value, constants::RPM side);
 };
